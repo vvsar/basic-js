@@ -13,13 +13,17 @@ const { NotImplementedError } = require('../extensions/index.js');
 function encodeLine(str) {
   if (str.length < 2) return str;
   let newStr = '';
-  let letters = Array.from(new Set(str)).sort();
-  for (let i = 0; i < letters.length; i++) {
-    let c = 0;
-    for (let j = 0; j < str.length; j++) {
-      if (str[j] === letters[i]) c++;
+  while (str.length > 0) {
+    let i = 0;
+    while (str[i + 1] === str[i]) {
+      i++;
     }
-    newStr = `${newStr}${c}${letters[i]}`;
+    if (i === 0) {
+      newStr = `${newStr}${str[0]}`;
+    } else {
+      newStr = `${newStr}${i + 1}${str[0]}`;
+    }
+    str = str.slice(i + 1);
   }
   return newStr;
 }
