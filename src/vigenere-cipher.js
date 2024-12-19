@@ -20,13 +20,55 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(dirMach = true) {
+    this.dirMach = dirMach;
+    this.abc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  };
+  encrypt(str, key) {
+    if (!str || !key) {
+      throw new Error('Incorrect arguments!');
+    }
+    str = str.toUpperCase();
+    key = key.toUpperCase();
+    const arr = [];
+    let j = 0;
+    for (i = 0; i < str.length; i++) {
+      if (this.abc.indexOf(str[i]) === -1) {
+        arr.push(str[i]);
+        continue;
+      }
+      let k = this.abc[((this.abc.indexOf(str[i]) + this.abc.indexOf(key[j])) % 26)];
+      j++;
+      if (j === key.length) {
+        j = 0;
+      }
+      arr.push(k);
+    }
+    if (!this.dirMach) arr.reverse();
+    return arr.join('');
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  decrypt(encryptedStr, key) {
+    if (!encryptedStr || !key) {
+      throw new Error('Incorrect arguments!');
+    };
+    encryptedStr = encryptedStr.toUpperCase();
+    key = key.toUpperCase();
+    const arr = [];
+    let j = 0;
+    for (i = 0; i < encryptedStr.length; i++) {
+      if (this.abc.indexOf(encryptedStr[i]) === -1) {
+        arr.push(encryptedStr[i]);
+        continue;
+      }
+      let k = this.abc[(this.abc.indexOf(encryptedStr[i]) - this.abc.indexOf(key[j]) + 26) % 26]; 
+      j++;
+      if (j === key.length) {
+        j = 0;
+      }
+      arr.push(k);
+    }
+    if (!this.dirMach) arr.reverse();
+    return arr.join('');
   }
 }
 
