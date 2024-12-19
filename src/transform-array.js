@@ -22,22 +22,22 @@ function transform(arr) {
   for (i = 0; i < arr.length; i++) {
     switch (arr[i]) {
         case "--discard-next":
-          if (i == arr.length - 1) break;
+          if (i === arr.length - 1) break;
           i++;
-          if (arr[i + 1] == "--double-prev" || arr[i + 1] == "--discard-prev") i++;
+          if (arr[i + 1] === "--double-prev" || arr[i + 1] === "--discard-prev") i++;
           break;
         case "--double-next":
-          if (i == arr.length - 1) break;
+          if (i === arr.length - 1) break;
           newArr.push(arr[i + 1]);
           newArr.push(arr[i + 1]);
           i++;
           break;
         case "--discard-prev":
-          if (i == 0) break;
+          if (i === 0) break;
           newArr.pop();
           break;
         case "--double-prev":
-          if (i == 0) break;
+          if (i === 0) break;
           newArr.push(arr[i - 1]);
           break;
         default:
